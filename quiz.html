@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible Quiz: Book of Revelation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .scripture {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: left;
+            width: 90%;
+            max-width: 600px;
+        }
+        .quiz-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .options li.correct {
+            background: #28a745;
+            color: white;
+        }
+        .options li.wrong {
+            background: #dc3545;
+            color: white;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .score {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bible Quiz: Book of Revelation</h1>
+    <div class="scripture">
+        Revelation 21:1-7
+        Revelation 21:10
+        Revelation 21:22
+        Revelation 21:27
+    </div>
+    <div class="quiz-container">
+        <div class="question" id="question">Question will appear here</div>
+        <ul class="options" id="options"></ul>
+        <button id="nextButton" class="hidden">Next Question</button>
+        <div class="score hidden" id="scoreContainer">Your score: <span id="score">0</span></div>
+        <button id="startButton">Start Quiz</button>
+    </div>
+    <footer>
+        &copy; 2024 Kelvin Dampson. Quiz by YPG Oyibi.
+    </footer>
+
+    <script>
+        const questions = [
+            { question: "In Revelation 21:1, what does John see?", options: ["A new heaven and a new earth", "A new city", "A new heaven and a new earth", "A new kingdom"], answer: "A new heaven and a new earth" },
+            { question: "The Holy City mentioned in Revelation 21:2 is called:", options: ["New Zion", "The New Jerusalem", "The City of God", "The Holy Mountain"], answer: "The New Jerusalem" },
+            { question: "In Revelation 21:3, who is said to dwell among the people?", options: ["The angels", "God", "The prophets", "The saints"], answer: "God" },
+            { question: "According to Revelation 21:4, what will God wipe away from their eyes?", options: ["Dust", "Shadows", "Tears", "Pain"], answer: "Tears" },
+            { question: "In Revelation 21:5, who declares, 'I am making everything new'?", options: ["An elder", "He who was seated on the throne", "An angel", "John"], answer: "He who was seated on the throne" },
+            { question: "In Revelation 21:6, what does God promise to the thirsty?", options: ["Food", "Water without cost", "Wine", "Shelter"], answer: "Water without cost" },
+            { question: "According to Revelation 21:7, who will inherit all things?", options: ["The faithful", "Those who are victorious", "The righteous", "The learned"], answer: "Those who are victorious" },
+            { question: "In Revelation 21:10, where is John taken to see the Holy City?", options: ["A valley", "A river", "A mountain", "A plain"], answer: "A mountain" },
+            { question: "Revelation 21:22 states that there is no temple in the city because:", options: ["It is too far", "God and the Lamb are its temple", "The city has no need", "The city is empty"], answer: "God and the Lamb are its temple" },
+            { question: "Who is allowed to enter the New Jerusalem, according to Revelation 21:27?", options: ["All people", "Only those whose names are written in the Lamb’s book of life", "The righteous", "The wealthy"], answer: "Only those whose names are written in the Lamb’s book of life" },
+            { question: "In Revelation 21:1, the phrase 'new heaven and new earth' signifies:", options: ["Complete renewal", "The end of time", "A fresh start", "A new beginning"], answer: "Complete renewal" },
+            { question: "In Revelation 21:2, the New Jerusalem is described as coming down from heaven like:", options: ["A fortress", "A bride", "A garden", "A castle"], answer: "A bride" },
+            { question: "What will no longer exist according to Revelation 21:4?", options: ["Joy", "Death", "Conflict", "Knowledge"], answer: "Death" },
+            { question: "The metaphor 'water of life' in Revelation 21:6 represents:", options: ["Physical sustenance", "Spiritual fulfillment", "Abundant wealth", "Eternal joy"], answer: "Spiritual fulfillment" },
+            { question: "The 'victorious' in Revelation 21:7 refers to:", options: ["The strongest believers", "Those who overcome", "The wealthiest", "The most knowledgeable"], answer: "Those who overcome" },
+            { question: "John is shown the Holy City by:", options: ["An elder", "The Spirit", "An angel", "A prophet"], answer: "The Spirit" },
+            { question: "In Revelation 21:21, the streets of the New Jerusalem are made of:", options: ["Silver", "Pure gold", "Stone", "Clay"], answer: "Pure gold" },
+            { question: "The absence of a temple signifies:", options: ["God’s direct presence", "The city has no worship", "The city is unholy", "The city is empty"], answer: "God’s direct presence" },
+            { question: "Revelation 21:27 emphasizes that:", options: ["Everyone can enter the city", "Nothing impure will enter", "Only the righteous will be saved", "Wealth will determine entry"], answer: "Nothing impure will enter" },
+            { question: "The New Jerusalem is characterized by:", options: ["Great wealth", "No pain or suffering", "Large crowds", "High walls"], answer: "No pain or suffering" },
+            { question: "In Revelation 21:6, the 'water of life' is described as:", options: ["Costly", "Limited", "Free", "Bitter"], answer: "Free" },
+            { question: "The glory of the New Jerusalem reflects:", options: ["Human achievement", "God’s glory", "Historical significance", "Natural beauty"], answer: "God’s glory" },
+            { question: "In Revelation 21:5, God promises to make:", options: ["Everything rich", "Everything new", "Everything perfect", "Everything bright"], answer: "Everything new" },
+            { question: "The phrase 'those who are victorious' emphasizes:", options: ["The strongest", "The wealthiest", "Faithfulness in overcoming trials", "Popularity"], answer: "Faithfulness in overcoming trials" },
+            { question: "Revelation 21:3 tells us that God will:", options: ["Judge the nations", "Send angels", "Dwell with His people", "Provide riches"], answer: "Dwell with His people" },
+            { question: "The New Jerusalem symbolizes:", options: ["A place of peace and safety", "A historical city", "A place of conflict", "A political entity"], answer: "A place of peace and safety" },
+            { question: "The gates of the New Jerusalem are made of:", options: ["Silver", "Pearls", "Gold", "Stone"], answer: "Pearls" },
+            { question: "In Revelation 21:4, God will:", options: ["Give strength", "Provide riches", "Wipe every tear", "Open the heavens"], answer: "Wipe every tear" },
+            { question: "The description of the New Jerusalem emphasizes:", options: ["Its size", "Its defenses", "Its beauty and perfection", "Its history"], answer: "Its beauty and perfection" },
+            { question: "The ultimate message of Revelation 21 is about:", options: ["Judgment", "Hope and renewal", "Conflict", "Fear"], answer: "Hope and renewal" },
+            { question: "What is the primary source of light in the New Jerusalem according to Revelation 21:23?", options: ["The sun", "The moon", "The glory of God", "Stars"], answer: "The glory of God" },
+            { question: "Revelation 21:5 indicates that God is in the process of:", options: ["Making all things new", "Leaving things as they are", "Destroying the earth", "Ignoring human suffering"], answer: "Making all things new" },
+            { question: "The New Jerusalem serves as a reminder of:", options: ["The end of all things", "God’s ultimate plan for redemption", "A historical city", "A place of conflict"], answer: "God’s ultimate plan for redemption" },
+            { question: "The vision of the New Jerusalem encourages believers to:", options: ["Fear judgment", "Focus on worldly matters", "Anticipate God’s kingdom", "Ignore the future"], answer: "Anticipate God’s kingdom" },
+            { question: "In Revelation 21:27, it is stated that only those who are:", options: ["Pure", "Wealthy", "Knowledgeable", "Powerful"], answer: "Pure" },
+            { question: "The absence of tears in the New Jerusalem represents:", options: ["A loss of emotion", "Complete healing", "A new beginning", "A change in focus"], answer: "Complete healing" },
+            { question: "The relationship between God and His people is described as:", options: ["Intimate and direct", "Distant", "Conditional", "Based on works"], answer: "Intimate and direct" },
+            { question: "The ultimate hope presented in Revelation 21 is:", options: ["Eternal life", "Riches", "Power", "Knowledge"], answer: "Eternal life" },
+            { question: "Revelation 21 emphasizes that God will:", options: ["Make all things new", "Leave things as they are", "Destroy the earth", "Ignore human suffering"], answer: "Make all things new" },
+            { question: "The description of the New Jerusalem highlights:", options: ["God’s faithfulness", "Human achievement", "Historical significance", "Military power"], answer: "God’s faithfulness" },
+            { question: "What does Revelation 21:4 say will not be present in the New Jerusalem?", options: ["Joy", "Death", "Conflict", "Wealth"], answer: "Death" },
+            { question: "Revelation 21:6 describes the 'water of life' as:", options: ["Free", "Costly", "Limited", "Bitter"], answer: "Free" },
+            { question: "The ultimate promise of Revelation 21 is:", options: ["Wealth", "Eternal life", "Knowledge", "Popularity"], answer: "Eternal life" },
+            { question: "The vision of the New Jerusalem ultimately reflects:", options: ["God’s love and restoration", "A historical event", "A political statement", "A military conquest"], answer: "God’s love and restoration" },
+            { question: "The gates of the New Jerusalem are described as being:", options: ["Made of pearls", "Made of gold", "Made of silver", "Made of bronze"], answer: "Made of pearls" },
+            { question: "According to Revelation 21:3, what does God’s presence among people signify?", options: ["Judgment", "Intimacy", "Fear", "Distance"], answer: "Intimacy" },
+            { question: "In Revelation 21:22, the lack of a temple symbolizes:", options: ["The city has no worship", "God’s direct presence", "The city is unholy", "The city is empty"], answer: "God’s direct presence" },
+            { question: "The New Jerusalem is depicted as a place where:", options: ["There is conflict", "There are wars", "There is peace", "There is suffering"], answer: "There is peace" },
+            { question: "Revelation 21 encourages believers to hold on to:", options: ["Hope", "Fear", "Worry", "Despair"], answer: "Hope" },
+            { question: "The vision of the New Jerusalem ultimately represents:", options: ["God’s ultimate plan for humanity", "A historical city", "A place of conflict", "A military stronghold"], answer: "God’s ultimate plan for humanity" },
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const scoreElement = document.getElementById('score');
+        const nextButton = document.getElementById('nextButton');
+        const startButton = document.getElementById('startButton');
+        const scoreContainer = document.getElementById('scoreContainer');
+
+        startButton.addEventListener('click', startQuiz);
+        nextButton.addEventListener('click', nextQuestion);
+
+        function startQuiz() {
+            score = 0;
+            currentQuestionIndex = 0;
+            scoreContainer.classList.add('hidden');
+            nextButton.classList.add('hidden');
+            startButton.classList.add('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = currentQuestion.question;
+            optionsElement.innerHTML = '';
+            currentQuestion.options.forEach(option => {
+                const li = document.createElement('li');
+                li.textContent = option;
+                li.addEventListener('click', () => selectOption(li, option));
+                optionsElement.appendChild(li);
+            });
+        }
+
+        function selectOption(selectedLi, selectedOption) {
+            const currentQuestion = questions[currentQuestionIndex];
+            if (selectedOption === currentQuestion.answer) {
+                selectedLi.classList.add('correct');
+                score++;
+            } else {
+                selectedLi.classList.add('wrong');
+                const correctOption = [...optionsElement.children].find(li => li.textContent === currentQuestion.answer);
+                if (correctOption) {
+                    correctOption.classList.add('correct');
+                }
+            }
+            nextButton.classList.remove('hidden');
+            optionsElement.querySelectorAll('li').forEach(li => li.style.pointerEvents = 'none');
+            showScore();
+        }
+
+        function showScore() {
+            if (currentQuestionIndex === questions.length - 1) {
+                scoreContainer.classList.remove('hidden');
+                questionElement.textContent = "Quiz Finished! Your final score is: " + score;
+                optionsElement.innerHTML = '';
+                nextButton.classList.add('hidden');
+                startButton.classList.remove('hidden');
+                return;
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            }
+        }
+    </script>
+
+<!--
+Theme: Hope and Renewal: The Promise of a New Creation
+Key Scriptures:
+Revelation 21:1
+“Then I saw a new heaven and a new earth, for the first heaven and the first earth had passed away.”
+
+Discuss the significance of a fresh start and new beginnings.
+Revelation 21:2
+“I saw the Holy City, the new Jerusalem, coming down out of heaven from God, prepared as a bride beautifully dressed for her husband.”
+
+Explore the imagery of the New Jerusalem and its implications for community and belonging.
+Revelation 21:3
+“And I heard a loud voice from the throne saying, ‘Look! God’s dwelling place is now among the people, and he will dwell with them.’”
+
+Reflect on the importance of God’s presence in our lives today.
+Revelation 21:4
+“He will wipe every tear from their eyes. There will be no more death or mourning or crying or pain.”
+
+Emphasize the promise of healing and restoration in God’s future.
+Revelation 21:5
+“He who was seated on the throne said, ‘I am making everything new!’”
+
+Discuss the hope that comes from God’s active role in renewal.
+Revelation 21:6
+“To the thirsty I will give water without cost from the spring of the water of life.”
+
+Highlight spiritual fulfillment and God’s provision for our needs.
+Revelation 21:7
+“Those who are victorious will inherit all this, and I will be their God and they will be my children.”
+
+Consider what it means to live victoriously in faith.
+Revelation 21:10
+“And he carried me away in the Spirit to a mountain great and high and showed me the Holy City, Jerusalem, coming down out of heaven.”
+
+Explore the significance of the vision of the Holy City.
+Revelation 21:22
+“I did not see a temple in the city, because the Lord God Almighty and the Lamb are its temple.”
+
+Discuss the meaning of God’s direct presence without a temple.
+Revelation 21:27
+“Nothing impure will ever enter it, nor will anyone who does what is shameful or deceitful, but only those whose names are written in the Lamb’s book of life.”
+
+Reflect on the call to holiness and what it means for our lives.
+-->
+</body>
+</html>
