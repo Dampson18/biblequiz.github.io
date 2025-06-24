@@ -4,95 +4,212 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bible Quiz: Book of Revelation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* General Body Styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: 'Open Sans', sans-serif; /* A clean, modern sans-serif font */
+            background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%); /* Softer, calming gradient */
+            color: #2c3e50; /* Dark blue-gray for text */
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh; /* Ensure it takes full viewport height */
+            margin: 0;
+            box-sizing: border-box; /* Include padding in element's total width and height */
         }
+
+        /* Header */
         h1 {
-            margin-bottom: 20px;
-        }
-        .scripture {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: left;
-            width: 90%;
-            max-width: 600px;
-        }
-        .quiz-container {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 90%;
-            max-width: 600px;
+            font-family: 'Merriweather', serif; /* A classic serif for the title */
+            font-size: 2.5em;
+            color: #1d3557; /* Darker blue for emphasis */
+            margin-bottom: 25px;
             text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
+
+        /* Scripture Reference Section */
+        .scripture {
+            font-size: 1.2em; /* Slightly smaller for references */
+            font-weight: 600; /* Bolder than regular text */
+            margin-bottom: 30px;
+            text-align: center;
+            width: 90%;
+            max-width: 700px; /* Increased max-width for references */
+            background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #1d3557;
+            line-height: 1.6;
+        }
+
+        /* Main Quiz Container */
+        .quiz-container {
+            background: #ffffff; /* Clean white background for the main card */
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Stronger, softer shadow */
+            padding: 30px;
+            width: 90%;
+            max-width: 650px; /* Slightly wider quiz container */
+            text-align: center;
+            transition: all 0.3s ease-in-out; /* Smooth transitions for potential future animations */
+        }
+
+        /* Question Number Display */
+        #questionNumber {
+            font-size: 1em;
+            color: #457b9d;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* Question Text */
         .question {
-            font-size: 1.2em;
-            margin-bottom: 15px;
+            font-family: 'Merriweather', serif;
+            font-size: 1.6em; /* Larger question font */
+            margin-bottom: 25px;
+            color: #1d3557;
+            line-height: 1.5;
         }
+
+        /* Options List */
         .options {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
+
+        /* Individual Option Item */
         .options li {
-            margin: 10px 0;
+            background: #f1faee; /* Light, calming background for options */
+            border: 1px solid #a8dadc; /* Subtle border matching background */
+            margin: 12px 0; /* More vertical spacing */
+            padding: 15px 20px; /* More padding for larger clickable area */
+            border-radius: 8px; /* Rounded corners for options */
             cursor: pointer;
-            padding: 5px;
-            border-radius: 5px;
-            transition: background 0.3s;
+            transition: background 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+            font-size: 1.1em;
+            color: #457b9d; /* Text color for options */
+            text-align: left; /* Align option text to the left */
         }
+
+        .options li:hover {
+            background: #e0f2f7; /* Lighter background on hover */
+            transform: translateY(-3px); /* Subtle lift effect */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Correct Option Styling */
         .options li.correct {
-            background: #28a745;
+            background: #28a745; /* Standard green for correct */
             color: white;
+            border-color: #218838;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(40, 167, 69, 0.5); /* Green shadow */
+            transform: none; /* No lift for selected correct */
+            pointer-events: none; /* Disable clicks after selection */
         }
+
+        /* Wrong Option Styling */
         .options li.wrong {
-            background: #dc3545;
+            background: #dc3545; /* Standard red for wrong */
             color: white;
+            border-color: #c82333;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(220, 53, 69, 0.5); /* Red shadow */
+            transform: none; /* No lift for selected wrong */
+            pointer-events: none; /* Disable clicks after selection */
         }
+
+        /* Button Styling */
         button {
-            padding: 10px 15px;
+            padding: 12px 25px; /* More padding for larger buttons */
             border: none;
-            background: #28a745;
+            background: #1d3557; /* Dark blue button */
             color: white;
-            border-radius: 5px;
+            border-radius: 8px; /* Rounded corners for buttons */
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s ease, transform 0.2s ease;
+            font-size: 1.1em;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Button shadow */
+            margin-top: 20px; /* Space above button */
         }
+
         button:hover {
-            background: #218838;
+            background: #457b9d; /* Lighter blue on hover */
+            transform: translateY(-2px); /* Slight lift */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
+
+        button:active {
+            transform: translateY(0); /* Press effect */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Score Display */
         .score {
-            margin: 20px 0;
-            font-size: 1.2em;
+            margin: 25px 0; /* More margin around score */
+            font-size: 1.5em; /* Larger score font */
+            font-weight: 700; /* Bold score */
+            color: #1d3557;
         }
+
+        /* Hidden Class */
         .hidden {
             display: none;
         }
+
+        /* Footer */
         footer {
-            margin-top: 20px;
+            margin-top: 30px; /* More space from quiz */
             font-size: 0.9em;
-            color: #777;
+            color: #457b9d; /* Muted color for footer text */
+            text-align: center;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .scripture {
+                font-size: 1em;
+                padding: 10px;
+            }
+            .quiz-container {
+                padding: 20px;
+            }
+            #questionNumber {
+                font-size: 0.9em;
+            }
+            .question {
+                font-size: 1.3em;
+            }
+            .options li {
+                font-size: 1em;
+                padding: 12px 15px;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+            .score {
+                font-size: 1.3em;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Bible Quiz: Book of Revelation</h1>
     <div class="scripture">
-        Revelation 21:1-7
-        Revelation 21:10
-        Revelation 21:22
-        Revelation 21:27
+        Revelation 21:1-7, Revelation 21:10, Revelation 21:22, Revelation 21:27
     </div>
     <div class="quiz-container">
-        <div class="question" id="question">Question will appear here</div>
+        <div id="questionNumber" class="hidden"></div> <div class="question" id="question">Click "Start Quiz" to begin!</div>
         <ul class="options" id="options"></ul>
         <button id="nextButton" class="hidden">Next Question</button>
         <div class="score hidden" id="scoreContainer">Your score: <span id="score">0</span></div>
@@ -103,7 +220,7 @@
     </footer>
 
     <script>
-        const questions = [
+        const originalQuestions = [ // Renamed to originalQuestions
             { question: "In Revelation 21:1, what does John see?", options: ["A new heaven and a new earth", "A new city", "A new heaven and a new earth", "A new kingdom"], answer: "A new heaven and a new earth" },
             { question: "The Holy City mentioned in Revelation 21:2 is called:", options: ["New Zion", "The New Jerusalem", "The City of God", "The Holy Mountain"], answer: "The New Jerusalem" },
             { question: "In Revelation 21:3, who is said to dwell among the people?", options: ["The angels", "God", "The prophets", "The saints"], answer: "God" },
@@ -156,9 +273,12 @@
             { question: "The vision of the New Jerusalem ultimately represents:", options: ["God’s ultimate plan for humanity", "A historical city", "A place of conflict", "A military stronghold"], answer: "God’s ultimate plan for humanity" },
         ];
 
+        let questions = []; // This will hold the shuffled questions for the current quiz
         let currentQuestionIndex = 0;
         let score = 0;
+        let answeredThisQuestion = false; // Flag to prevent multiple answers per question
 
+        const questionNumberElement = document.getElementById('questionNumber'); // Get new element
         const questionElement = document.getElementById('question');
         const optionsElement = document.getElementById('options');
         const scoreElement = document.getElementById('score');
@@ -169,106 +289,95 @@
         startButton.addEventListener('click', startQuiz);
         nextButton.addEventListener('click', nextQuestion);
 
+        // Function to shuffle an array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
         function startQuiz() {
+            questions = shuffleArray([...originalQuestions]); // Shuffle a copy of the original questions
             score = 0;
             currentQuestionIndex = 0;
+            answeredThisQuestion = false;
+
             scoreContainer.classList.add('hidden');
             nextButton.classList.add('hidden');
             startButton.classList.add('hidden');
+            questionNumberElement.classList.remove('hidden'); // Show question number
             loadQuestion();
         }
 
         function loadQuestion() {
-            const currentQuestion = questions[currentQuestionIndex];
-            questionElement.textContent = currentQuestion.question;
-            optionsElement.innerHTML = '';
-            currentQuestion.options.forEach(option => {
-                const li = document.createElement('li');
-                li.textContent = option;
-                li.addEventListener('click', () => selectOption(li, option));
-                optionsElement.appendChild(li);
-            });
+            if (currentQuestionIndex < questions.length) {
+                const currentQuestion = questions[currentQuestionIndex];
+                questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`; // Update question number
+                questionElement.textContent = currentQuestion.question;
+                optionsElement.innerHTML = '';
+                
+                // Shuffle options for the current question
+                const shuffledOptions = shuffleArray([...currentQuestion.options]);
+
+                shuffledOptions.forEach(option => {
+                    const li = document.createElement('li');
+                    li.textContent = option;
+                    li.addEventListener('click', () => selectOption(li, option));
+                    optionsElement.appendChild(li);
+                });
+                answeredThisQuestion = false; // Reset for new question
+            } else {
+                // Quiz finished
+                showFinalScore();
+            }
         }
 
         function selectOption(selectedLi, selectedOption) {
+            if (answeredThisQuestion) {
+                return; // Prevent multiple clicks on options for the same question
+            }
+            answeredThisQuestion = true; // Mark question as answered
+
             const currentQuestion = questions[currentQuestionIndex];
+            const allOptions = optionsElement.querySelectorAll('li');
+
+            // Disable all options after selection
+            allOptions.forEach(li => li.style.pointerEvents = 'none');
+
             if (selectedOption === currentQuestion.answer) {
                 selectedLi.classList.add('correct');
-                score++;
+                score++; // Increment score only for correct answers
             } else {
                 selectedLi.classList.add('wrong');
-                const correctOption = [...optionsElement.children].find(li => li.textContent === currentQuestion.answer);
+                // Find and highlight the correct option
+                const correctOption = [...allOptions].find(li => li.textContent === currentQuestion.answer);
                 if (correctOption) {
                     correctOption.classList.add('correct');
                 }
             }
-            nextButton.classList.remove('hidden');
-            optionsElement.querySelectorAll('li').forEach(li => li.style.pointerEvents = 'none');
-            showScore();
-        }
 
-        function showScore() {
-            if (currentQuestionIndex === questions.length - 1) {
-                scoreContainer.classList.remove('hidden');
-                questionElement.textContent = "Quiz Finished! Your final score is: " + score;
-                optionsElement.innerHTML = '';
-                nextButton.classList.add('hidden');
-                startButton.classList.remove('hidden');
-                return;
-            }
+            nextButton.classList.remove('hidden');
+            // No need to call showScore here, it's only for the final display
         }
 
         function nextQuestion() {
             currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion();
-            }
+            nextButton.classList.add('hidden'); // Hide next button until next answer
+            loadQuestion();
+        }
+
+        function showFinalScore() {
+            questionNumberElement.classList.add('hidden'); // Hide question number
+            scoreContainer.classList.remove('hidden');
+            questionElement.textContent = `Quiz Finished! Your final score is: ${score} out of ${questions.length}`;
+            scoreElement.textContent = score; // Ensure the score span updates
+            optionsElement.innerHTML = '';
+            nextButton.classList.add('hidden');
+            startButton.textContent = "Restart Quiz";
+            startButton.classList.remove('hidden');
         }
     </script>
-
-<!--
-Theme: Hope and Renewal: The Promise of a New Creation
-Key Scriptures:
-Revelation 21:1
-“Then I saw a new heaven and a new earth, for the first heaven and the first earth had passed away.”
-
-Discuss the significance of a fresh start and new beginnings.
-Revelation 21:2
-“I saw the Holy City, the new Jerusalem, coming down out of heaven from God, prepared as a bride beautifully dressed for her husband.”
-
-Explore the imagery of the New Jerusalem and its implications for community and belonging.
-Revelation 21:3
-“And I heard a loud voice from the throne saying, ‘Look! God’s dwelling place is now among the people, and he will dwell with them.’”
-
-Reflect on the importance of God’s presence in our lives today.
-Revelation 21:4
-“He will wipe every tear from their eyes. There will be no more death or mourning or crying or pain.”
-
-Emphasize the promise of healing and restoration in God’s future.
-Revelation 21:5
-“He who was seated on the throne said, ‘I am making everything new!’”
-
-Discuss the hope that comes from God’s active role in renewal.
-Revelation 21:6
-“To the thirsty I will give water without cost from the spring of the water of life.”
-
-Highlight spiritual fulfillment and God’s provision for our needs.
-Revelation 21:7
-“Those who are victorious will inherit all this, and I will be their God and they will be my children.”
-
-Consider what it means to live victoriously in faith.
-Revelation 21:10
-“And he carried me away in the Spirit to a mountain great and high and showed me the Holy City, Jerusalem, coming down out of heaven.”
-
-Explore the significance of the vision of the Holy City.
-Revelation 21:22
-“I did not see a temple in the city, because the Lord God Almighty and the Lamb are its temple.”
-
-Discuss the meaning of God’s direct presence without a temple.
-Revelation 21:27
-“Nothing impure will ever enter it, nor will anyone who does what is shameful or deceitful, but only those whose names are written in the Lamb’s book of life.”
-
-Reflect on the call to holiness and what it means for our lives.
--->
 </body>
 </html>
